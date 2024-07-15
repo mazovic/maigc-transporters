@@ -1,19 +1,56 @@
 {
-  "name": "maigc-transporters",
-  "version": "1.0.0",
-  "description": "Welcome to Magic Transporters, the future of moving things easily. These super cool transporters, powered by virtual magic, are here to make shipping stuff a breeze.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mazovic/maigc-transporters.git"
-  },
-  "author": "mazovic",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/mazovic/maigc-transporters/issues"
-  },
-  "homepage": "https://github.com/mazovic/maigc-transporters#readme"
+    "name": "magic-transporters",
+    "version": "1.0.0",
+    "description": "task for Unifi_Solutions",
+    "main": "app.ts",
+    "scripts": {
+        "start": "ts-node src/server.ts --watch",
+        "test": "jest",
+        "build": "tsc",
+        "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
+    },
+    "author": "mazovic",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "glob": "^11.0.0",
+        "helmet": "^7.1.0",
+        "mongoose": "^8.5.1",
+        "morgan": "^1.10.0",
+        "reflect-metadata": "^0.2.2",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-express": "^5.0.1",
+        "tsyringe": "^4.8.0",
+        "winston": "^3.13.1",
+        "zod": "^3.23.8",
+        "zod-to-json-schema": "^3.23.1"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/jest": "^29.5.12",
+        "@types/morgan": "^1.9.9",
+        "@types/node": "^20.14.10",
+        "@types/supertest": "^6.0.2",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.6",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb": "^17.1.0",
+        "eslint-config-prettier": "^4.1.0",
+        "eslint-plugin-import": "^2.17.2",
+        "eslint-plugin-jsx-a11y": "^6.2.1",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-prettier": "^3.0.1",
+        "eslint-plugin-react": "^7.12.4",
+        "jest": "^29.7.0",
+        "prettier": "^1.17.0",
+        "supertest": "^7.0.0",
+        "ts-jest": "^29.2.2",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.5.3"
+    },
+    "engines": {
+        "node": ">=18.18.2"
+    }
 }
