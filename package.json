@@ -1,0 +1,19 @@
+{
+  "name": "maigc-transporters",
+  "version": "1.0.0",
+  "description": "Welcome to Magic Transporters, the future of moving things easily. These super cool transporters, powered by virtual magic, are here to make shipping stuff a breeze.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mazovic/maigc-transporters.git"
+  },
+  "author": "mazovic",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mazovic/maigc-transporters/issues"
+  },
+  "homepage": "https://github.com/mazovic/maigc-transporters#readme"
+}
