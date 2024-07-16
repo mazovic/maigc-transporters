@@ -12,6 +12,8 @@ import { MiddlewareLoader } from "./loaders/middleware.loader";
 import dotenv from "dotenv";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger-config";
+import { SchemaLoader } from "./loaders/schemas.loader";
+import { ZodError } from "zod";
 
 dotenv.config();
 
@@ -20,6 +22,7 @@ class App {
 
     constructor() {
         this.app = express();
+        this.loadSchemas();
         this.loadGlobalMiddlewares();
         this.loadRoutes();
         this.swaggerSetup();
@@ -28,7 +31,9 @@ class App {
         this.handleNotFoundRoutes();
         this.handleError();
     }
-
+    private loadSchemas() {
+        new SchemaLoader().load();
+    }
     private loadGlobalMiddlewares() {
         new MiddlewareLoader().load().forEach(e => this.app.use(e));
     }
@@ -64,7 +69,10 @@ class App {
     private handleError() {
         this.app.use(
             (err: unknown, req: Request, res: Response, next: NextFunction) => {
-                logger.error({});
+                if (err instanceof ZodError) {
+                    return res.status(400).json(err);
+                }
+                logger.error({ err });
                 res.status(500).json({
                     error: "Something went wrong",
                     success: false
