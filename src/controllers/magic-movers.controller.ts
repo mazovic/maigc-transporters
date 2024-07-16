@@ -195,44 +195,40 @@ export class MagicMoverController {
         return this.mmService.endMission(req.params.id);
     }
 /**
-     * @swagger
-     * /api/top-movers:
-     *   get:
-     *     summary: Get Top Movers
-     *     responses:
-     *       200:
-     *         description: Successful response
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: array
-     *               items:
-     *                 type: object
-     *                 properties:
-     *                   mover:
-     *                     type: object
-     *                     properties:
-     *                       _id:
-     *                         type: string
-     *                         example: 60d9f4f88eb0c62f24b8e4f2
-     *                       name:
-     *                         type: string
-     *                         example: Mover1
-     *                       weightLimit:
-     *                         type: integer
-     *                         example: 100
-     *                       questState:
-     *                         type: string
-     *                         example: resting
-     *                       items:
-     *                         type: array
-     *                         items:
-     *                           type: string
-     *                         example: []
-     *                   missionCount:
-     *                     type: integer
-     *                     example: 5
-     */
+ * @swagger
+ * /api/magic-movers/top-movers:
+ *   get:
+ *     summary: Get Top Movers
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                   example: true
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       mover:
+ *                         type: object
+ *                         properties:
+ *                           name:
+ *                             type: string
+ *                             example: Mover2
+ *                       missionCount:
+ *                         type: integer
+ *                         example: 2
+ *                     required:
+ *                       - mover
+ *                       - missionCount
+ */
+
     @ResponseHandler()
     public async getTopMovers(req: Request, res: Response, next: NextFunction) {
         return this.mmService.getTopMovers();
