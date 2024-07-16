@@ -44,4 +44,8 @@ export class MagicMoverController {
     public async loadItems(req: Request, res: Response, next: NextFunction) {
         return this.mmService.loadItems(req.params.id, req.body);
     }
+    @ResponseHandler()
+    public async startMission(req: Request, res: Response, next: NextFunction) {
+        return this.mmService.startMission(req.params.id);
+    }
 }

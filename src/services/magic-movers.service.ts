@@ -49,10 +49,34 @@ export class MagicMoverService {
         mover.questState = "loading";
         await mover.save();
 
+        if (nonExistingItems.length > 0) {
+            const log = new this.ActivityLogModel({
+                moverId: id,
+                activity: "loading",
+                details: `Loaded items: ${nonExistingItems
+                    .map(item => item.name)
+                    .join(", ")}`
+            });
+            await log.save();
+        }
+        return mover;
+    }
+    async startMission(id: string) {
+        const mover = await this.MagicMoverModel.findById(id);
+        if (!mover) {
+            throw new Error("Magic Mover not found");
+        }
+        if (mover.questState !== "loading") {
+            throw new Error("Magic Mover is not in loading state");
+        }
+
+        mover.questState = "on-mission";
+        await mover.save();
+
         const log = new this.ActivityLogModel({
             moverId: id,
-            activity: "loading",
-            details: `Loaded items: ${items.map(item => item.name).join(", ")}`
+            activity: "on-mission",
+            details: "Mission started"
         });
         await log.save();
 
