@@ -104,4 +104,57 @@ export class MagicMoverService {
 
         return mover;
     }
+    async getTopMovers() {
+        const result = await this.ActivityLogModel.aggregate([
+            {
+                $match: {
+                    activity: "finished"
+                }
+            },
+            {
+                $group: {
+                    _id: "$moverId",
+                    count: {
+                        $sum: 1
+                    }
+                }
+            },
+            {
+                $sort: {
+                    count: -1
+                }
+            },
+            {
+                $addFields: {
+                    _id: {
+                        $toObjectId: "$_id"
+                    }
+                }
+            },
+            {
+                $lookup: {
+                    from: "magicmovers",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "mover"
+                }
+            },
+            {
+                $unwind: "$mover"
+            },
+            {
+                $project: {
+                    mover: {
+                        name: 1
+                    },
+                    count: 1
+                }
+            }
+        ]);
+
+        return result.map(entry => ({
+            mover: entry.mover,
+            missionCount: entry.count
+        }));
+    }
 }

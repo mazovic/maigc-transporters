@@ -20,4 +20,8 @@ router.put("/:id/end-mission", (req, res, next) =>
     controller.endMission(req, res, next)
 );
 
+router.get("/top-movers", (req, res, next) =>
+    controller.getTopMovers(req, res, next)
+);
+
 export default router;
