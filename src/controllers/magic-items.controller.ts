@@ -1,28 +1,27 @@
 import { NextFunction, Request, Response } from "express";
 import { container, injectable } from "tsyringe";
-import { TestService } from "../services/test.service";
 import { ResponseHandler } from "../decorators/response-decorator";
-import { MagicMoverService } from "../services/magic-movers.service";
+import { MagicItemService } from "../services/magic-items.service";
 
 @injectable()
-export class MagicMoverController {
-    constructor(private mmService: MagicMoverService) {}
+export class MagicItemsController {
+    constructor(private miService: MagicItemService) {}
     /**
      * @swagger
-     * /api/magic-movers/create:
+     * /api/magic-items/create:
      *   get:
-     *     summary: crate a magic mover
+     *     summary: crate a magic item
      *     responses:
      *       200:
      *         description: A successful response
      *         content:
      *           application/json:
      *             schema:
-     *               $ref: '#/components/schemas/MagicMoverResponse'
+     *               $ref: '#/components/schemas/MagicItemsResponse'
      *
      * components:
      *   schemas:
-     *     MagicMoverResponse:
+     *     MagicItemsResponse:
      *       type: object
      *       properties:
      *         data:
@@ -30,7 +29,7 @@ export class MagicMoverController {
      *           properties:
      *             name:
      *               type: string
-     *             weightLimit:
+     *             weight:
      *               type: number
      *         success:
      *           type: boolean
@@ -38,6 +37,6 @@ export class MagicMoverController {
 
     @ResponseHandler()
     public async create(req: Request, res: Response, next: NextFunction) {
-        return this.mmService.create(req.body);
+        return this.miService.create(req.body);
     }
 }
