@@ -9,8 +9,7 @@ export class MagicMoverController {
 /**
  * @swagger
  * /api/magic-movers/create:
- *   post
- * :
+ *   post:
  *     summary: Add a Magic Mover
  *     requestBody:
  *       required: true
