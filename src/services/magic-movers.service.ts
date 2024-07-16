@@ -64,10 +64,10 @@ export class MagicMoverService {
     async startMission(id: string) {
         const mover = await this.MagicMoverModel.findById(id);
         if (!mover) {
-            throw new Error("Magic Mover not found");
+            throw new AppError("Magic Mover not found");
         }
         if (mover.questState !== "loading") {
-            throw new Error("Magic Mover is not in loading state");
+            throw new AppError("Magic Mover is not in loading state");
         }
 
         mover.questState = "on-mission";
@@ -77,6 +77,28 @@ export class MagicMoverService {
             moverId: id,
             activity: "on-mission",
             details: "Mission started"
+        });
+        await log.save();
+
+        return mover;
+    }
+    async endMission(id: string) {
+        const mover = await this.MagicMoverModel.findById(id);
+        if (!mover) {
+            throw new AppError("Magic Mover not found");
+        }
+        if (mover.questState !== "on-mission") {
+            throw new AppError("Magic Mover is not on a mission");
+        }
+
+        mover.items = [];
+        mover.questState = "resting";
+        await mover.save();
+
+        const log = new this.ActivityLogModel({
+            moverId: id,
+            activity: "finished",
+            details: "Mission ended and items unloaded"
         });
         await log.save();
 

@@ -16,4 +16,8 @@ router.put("/:id/start-mission", (req, res, next) =>
     controller.startMission(req, res, next)
 );
 
+router.put("/:id/end-mission", (req, res, next) =>
+    controller.endMission(req, res, next)
+);
+
 export default router;
