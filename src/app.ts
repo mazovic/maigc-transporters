@@ -14,6 +14,11 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger-config";
 import { SchemaLoader } from "./loaders/schemas.loader";
 import { ZodError } from "zod";
+import { container } from "tsyringe";
+import MagicItemModel from "./models/magic-items.model";
+import MagicMoveModel from "./models/magic-mover.model";
+import ActivityLog from "./models/activity-log.model";
+import { AppError } from "./lib/AppError";
 
 dotenv.config();
 
@@ -23,6 +28,7 @@ class App {
     constructor() {
         this.app = express();
         this.loadSchemas();
+        this.loadModles();
         this.loadGlobalMiddlewares();
         this.loadRoutes();
         this.swaggerSetup();
@@ -69,14 +75,21 @@ class App {
     private handleError() {
         this.app.use(
             (err: unknown, req: Request, res: Response, next: NextFunction) => {
-                if (err instanceof ZodError) {
-                    return res.status(400).json(err);
-                }
-                logger.error({ err });
-                res.status(500).json({
-                    error: "Something went wrong",
+                let statusCode = 500;
+                const ret: any = {
+                    error: { message: "something went wrong" },
                     success: false
-                });
+                };
+                if (err instanceof ZodError) {
+                    ret.error = err;
+                    statusCode = 400;
+                }
+                if (err instanceof AppError) {
+                    statusCode = err.statusCode;
+                    ret.error = { ...err, message: err.message };
+                }
+                if (statusCode === 500) logger.error({ err });
+                res.status(statusCode).json(ret);
             }
         );
     }
@@ -87,6 +100,11 @@ class App {
                 success: false
             });
         });
+    }
+    private loadModles() {
+        container.register("MagicItemModel", { useValue: MagicItemModel });
+        container.register("ActivityLogModel", { useValue: ActivityLog });
+        container.register("MagicMoverModel", { useValue: MagicMoveModel });
     }
 }
 

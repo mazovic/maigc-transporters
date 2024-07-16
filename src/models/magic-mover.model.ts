@@ -1,9 +1,10 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Document, Schema, Types } from "mongoose";
 
 export interface MagicMover extends Document {
     name: string;
     weightLimit: number;
     questState: "resting" | "loading" | "on-mission";
+    items: Types.ObjectId[];
 }
 
 const MagicMoverSchema = new Schema({
@@ -13,7 +14,8 @@ const MagicMoverSchema = new Schema({
         type: String,
         enum: ["resting", "loading", "on-mission"],
         default: "resting"
-    }
+    },
+    items: [{ type: Schema.Types.ObjectId, ref: "MagicItem" }]
 });
 
 const model = mongoose.model<MagicMover>("MagicMover", MagicMoverSchema);

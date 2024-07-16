@@ -1,13 +1,16 @@
 import "reflect-metadata";
 import request from "supertest";
-import express, { Application } from "express";
-import { container } from "tsyringe";
-import { MagicMoverController } from "../../controllers/magic-movers.controller";
+
 import { MagicMoverService } from "../../services/magic-movers.service";
 import model from "../../models/magic-mover.model";
+import MagicMoverModel from "../../models/magic-mover.model";
+import MagicItemModel from "../../models/magic-items.model";
+import ActivityLogModel from "../../models/activity-log.model";
 import app from "../../app";
 
 jest.mock("../../models/magic-mover.model");
+jest.mock("../../models/magic-items.model");
+jest.mock("../../models/activity-log.model");
 
 describe("Magic Mover API", () => {
     let magicMoverService: MagicMoverService;

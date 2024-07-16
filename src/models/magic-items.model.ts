@@ -6,7 +6,7 @@ export interface MagicItem extends Document {
 }
 
 const MagicItemSchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String, required: true, unique: true },
     weight: { type: Number, required: true }
 });
 

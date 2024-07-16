@@ -2,8 +2,6 @@ import { container, injectable, inject } from "tsyringe";
 import model from "../models/magic-items.model";
 import { MagitcItemInput } from "../scehmas/magic-items.schema";
 
-container.register("MagicItemModel", { useValue: model });
-
 @injectable()
 export class MagicItemService {
     constructor(
